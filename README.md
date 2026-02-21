@@ -1,1 +1,1283 @@
-# gustavopereira.github.io
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gustavo Pereira • Programação, Fotônica & Biologia</title>
+    
+    <!-- Google Fonts - Classical Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Palette inspired by light, nature and science */
+            --rose-soft: #E8B4B8;
+            --rose-deep: #C17B7F;
+            --cream: #FDF8F0;
+            --cream-warm: #F5EBE0;
+            --green-sage: #8B9A6B;
+            --green-deep: #4A5D3A;
+            --green-forest: #2D3B28;
+            --blue-sky: #87ACCD;
+            --blue-deep: #4A6B8A;
+            --blue-photon: #5B8FB9;
+            --gold: #C9A227;
+            --gold-light: #E8D5A3;
+            --gold-dark: #8B6914;
+            --ink: #2C2416;
+            --ink-light: #4A3F2F;
+            --stone: #A69E8E;
+            --white-pure: #FFFEFA;
+            
+            /* Typography */
+            --font-display: 'Cinzel', serif;
+            --font-body: 'Cormorant Garamond', serif;
+            --font-accent: 'EB Garamond', serif;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: var(--font-body);
+            background: var(--cream);
+            color: var(--ink);
+            overflow-x: hidden;
+            line-height: 1.8;
+            font-size: 18px;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--cream-warm);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(to bottom, var(--green-sage), var(--green-deep));
+            border-radius: 5px;
+        }
+        
+        /* ===== TEXTURE OVERLAYS ===== */
+        .canvas-texture {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9998;
+            opacity: 0.02;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+        
+        /* ===== NAVIGATION ===== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(to bottom, rgba(253, 248, 240, 0.98), rgba(253, 248, 240, 0));
+            transition: all 0.5s ease;
+        }
+        
+        nav.scrolled {
+            background: rgba(253, 248, 240, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 30px rgba(44, 36, 22, 0.08);
+        }
+        
+        .nav-logo {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            letter-spacing: 0.15em;
+            color: var(--ink);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .nav-logo::before {
+            content: '✦';
+            color: var(--gold);
+            font-size: 0.8rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            font-family: var(--font-accent);
+            font-size: 1rem;
+            color: var(--ink-light);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--gold);
+            transition: width 0.4s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--ink);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        /* Mobile menu button */
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+        
+        .nav-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--ink);
+            margin: 5px 0;
+            transition: 0.3s;
+        }
+        
+        /* ===== HERO SECTION ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+        
+        .hero-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(1.05) saturate(0.9);
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse 100% 80% at 50% 100%, rgba(253, 248, 240, 0.95) 0%, transparent 70%),
+                radial-gradient(ellipse 80% 50% at 50% 0%, rgba(253, 248, 240, 0.7) 0%, transparent 60%),
+                linear-gradient(to bottom, rgba(253, 248, 240, 0.3), rgba(253, 248, 240, 0.6));
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 2rem;
+            max-width: 900px;
+        }
+        
+        /* Ornamental Elements */
+        .ornament {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeIn 1s ease 0.3s forwards;
+        }
+        
+        .ornament-line {
+            width: 80px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+        
+        .ornament-symbol {
+            color: var(--gold);
+            font-size: 1.2rem;
+        }
+        
+        .hero-subtitle {
+            font-family: var(--font-accent);
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            font-style: italic;
+            color: var(--ink-light);
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: fadeIn 1s ease 0.5s forwards;
+        }
+        
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            font-weight: 400;
+            color: var(--ink);
+            letter-spacing: 0.08em;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeInUp 1.2s ease 0.7s forwards;
+        }
+        
+        .hero-title span {
+            display: block;
+            font-size: 0.35em;
+            font-family: var(--font-accent);
+            font-style: italic;
+            font-weight: 400;
+            letter-spacing: 0.15em;
+            color: var(--ink-light);
+            margin-top: 0.75rem;
+        }
+        
+        .hero-areas {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeIn 1s ease 0.9s forwards;
+        }
+        
+        .hero-area {
+            font-family: var(--font-display);
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            color: var(--green-deep);
+            padding: 0.5rem 1.25rem;
+            border: 1px solid var(--green-sage);
+            background: rgba(139, 154, 107, 0.1);
+        }
+        
+        .hero-verse {
+            font-family: var(--font-accent);
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            font-style: italic;
+            color: var(--green-deep);
+            max-width: 550px;
+            margin: 0 auto 2.5rem;
+            opacity: 0;
+            animation: fadeIn 1s ease 1.1s forwards;
+        }
+        
+        .hero-verse cite {
+            display: block;
+            font-size: 0.85em;
+            color: var(--stone);
+            margin-top: 0.5rem;
+            font-style: normal;
+            letter-spacing: 0.1em;
+        }
+        
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-family: var(--font-display);
+            font-size: 0.8rem;
+            letter-spacing: 0.2em;
+            color: var(--ink);
+            text-decoration: none;
+            padding: 1rem 2.5rem;
+            border: 1px solid var(--gold);
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            opacity: 0;
+            animation: fadeInUp 1s ease 1.3s forwards;
+        }
+        
+        .hero-cta:hover {
+            background: var(--gold);
+            color: var(--white-pure);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(201, 162, 39, 0.3);
+        }
+        
+        .hero-cta svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.3s ease;
+        }
+        
+        .hero-cta:hover svg {
+            transform: translateY(3px);
+        }
+        
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            opacity: 0;
+            animation: fadeIn 1s ease 1.5s forwards, float 3s ease-in-out infinite 2s;
+        }
+        
+        .scroll-indicator span {
+            font-family: var(--font-accent);
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            color: var(--stone);
+            writing-mode: vertical-rl;
+        }
+        
+        .scroll-line {
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(to bottom, var(--gold), transparent);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0; 
+                transform: translateY(30px);
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
+        
+        /* ===== ABOUT SECTION ===== */
+        .about {
+            padding: clamp(6rem, 15vw, 10rem) clamp(2rem, 8vw, 8rem);
+            background: var(--cream);
+            position: relative;
+        }
+        
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 5rem;
+            max-width: 1300px;
+            margin: 0 auto;
+            align-items: center;
+        }
+        
+        .about-image {
+            position: relative;
+        }
+        
+        .about-image-frame {
+            position: relative;
+            padding: 1.25rem;
+            background: linear-gradient(135deg, var(--gold-light) 0%, var(--cream-warm) 50%, var(--gold-light) 100%);
+        }
+        
+        .about-image-frame::before {
+            content: '';
+            position: absolute;
+            inset: 0.4rem;
+            border: 1px solid var(--gold);
+            pointer-events: none;
+        }
+        
+        .about-image img {
+            width: 100%;
+            display: block;
+            filter: saturate(0.9);
+            transition: filter 0.5s ease;
+        }
+        
+        .about-image:hover img {
+            filter: saturate(1.1);
+        }
+        
+        .about-content {
+            padding-right: 1rem;
+        }
+        
+        .section-label {
+            font-family: var(--font-display);
+            font-size: 0.7rem;
+            letter-spacing: 0.3em;
+            color: var(--gold-dark);
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .section-label::before {
+            content: '';
+            width: 30px;
+            height: 1px;
+            background: var(--gold);
+        }
+        
+        .about-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 400;
+            color: var(--ink);
+            letter-spacing: 0.05em;
+            line-height: 1.3;
+            margin-bottom: 1.5rem;
+        }
+        
+        .about-text {
+            font-size: 1.05rem;
+            color: var(--ink-light);
+            margin-bottom: 1.25rem;
+        }
+        
+        .about-text:first-of-type::first-letter {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            float: left;
+            line-height: 1;
+            margin-right: 0.4rem;
+            margin-top: 0.1rem;
+            color: var(--gold-dark);
+        }
+        
+        /* Skills/Areas */
+        .about-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--cream-warm);
+        }
+        
+        .skill-tag {
+            font-family: var(--font-accent);
+            font-size: 0.85rem;
+            color: var(--ink-light);
+            padding: 0.4rem 1rem;
+            background: var(--cream-warm);
+            border: 1px solid rgba(166, 158, 142, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .skill-tag:hover {
+            border-color: var(--gold);
+            background: rgba(201, 162, 39, 0.1);
+        }
+        
+        /* ===== REPOSITORIES SECTION ===== */
+        .repos {
+            padding: clamp(6rem, 15vw, 10rem) clamp(2rem, 8vw, 4rem);
+            background: linear-gradient(to bottom, var(--cream), var(--cream-warm));
+            position: relative;
+        }
+        
+        .repos::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1px;
+            height: 80px;
+            background: linear-gradient(to bottom, var(--gold), transparent);
+        }
+        
+        .repos-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 4rem;
+        }
+        
+        .repos-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            font-weight: 400;
+            color: var(--ink);
+            letter-spacing: 0.08em;
+            margin-bottom: 1rem;
+        }
+        
+        .repos-intro {
+            font-family: var(--font-accent);
+            font-size: 1.1rem;
+            font-style: italic;
+            color: var(--ink-light);
+        }
+        
+        /* Repository Cards */
+        .repos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+        
+        .repo-card {
+            background: var(--white-pure);
+            position: relative;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            cursor: pointer;
+            overflow: hidden;
+        }
+        
+        .repo-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--blue-photon), var(--green-sage), var(--gold));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+        
+        .repo-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .repo-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 
+                0 20px 50px rgba(44, 36, 22, 0.1),
+                0 8px 20px rgba(44, 36, 22, 0.05);
+        }
+        
+        .repo-card-inner {
+            padding: 2rem;
+            border: 1px solid rgba(166, 158, 142, 0.3);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .repo-card:hover .repo-card-inner {
+            border-color: var(--gold-light);
+        }
+        
+        .repo-category {
+            font-family: var(--font-display);
+            font-size: 0.65rem;
+            letter-spacing: 0.25em;
+            color: var(--stone);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+        
+        .repo-category.photonics { color: var(--blue-photon); }
+        .repo-category.biology { color: var(--green-deep); }
+        .repo-category.programming { color: var(--gold-dark); }
+        
+        .repo-icon {
+            width: 45px;
+            height: 45px;
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--cream-warm), var(--white-pure));
+            border: 1px solid var(--gold-light);
+            font-size: 1.3rem;
+            transition: all 0.4s ease;
+        }
+        
+        .repo-card:hover .repo-icon {
+            background: var(--gold);
+            transform: rotate(5deg);
+        }
+        
+        .repo-title {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-weight: 500;
+            color: var(--ink);
+            letter-spacing: 0.04em;
+            margin-bottom: 0.75rem;
+            transition: color 0.3s ease;
+        }
+        
+        .repo-card:hover .repo-title {
+            color: var(--gold-dark);
+        }
+        
+        .repo-description {
+            font-size: 0.95rem;
+            color: var(--ink-light);
+            flex-grow: 1;
+            margin-bottom: 1.25rem;
+        }
+        
+        .repo-meta {
+            display: flex;
+            gap: 1.25rem;
+            padding-top: 1.25rem;
+            border-top: 1px solid var(--cream-warm);
+        }
+        
+        .repo-lang {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-family: var(--font-accent);
+            font-size: 0.85rem;
+            color: var(--stone);
+        }
+        
+        .repo-lang-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+        
+        .repo-lang-dot.python { background: #3776AB; }
+        .repo-lang-dot.javascript { background: #F7DF1E; }
+        .repo-lang-dot.matlab { background: #E16737; }
+        .repo-lang-dot.r { background: #276DC3; }
+        .repo-lang-dot.cpp { background: #00599C; }
+        .repo-lang-dot.julia { background: #9558B2; }
+        
+        .repo-link {
+            position: absolute;
+            inset: 0;
+            z-index: 10;
+        }
+        
+        /* Empty state */
+        .repos-empty {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: var(--white-pure);
+            border: 1px dashed var(--stone);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .repos-empty-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.5;
+        }
+        
+        .repos-empty-title {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            color: var(--ink);
+            margin-bottom: 1rem;
+        }
+        
+        .repos-empty-text {
+            font-family: var(--font-accent);
+            font-style: italic;
+            color: var(--stone);
+            margin-bottom: 2rem;
+        }
+        
+        .repos-empty-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            color: var(--ink);
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            border: 1px solid var(--gold);
+            transition: all 0.3s ease;
+        }
+        
+        .repos-empty-link:hover {
+            background: var(--gold);
+            color: var(--white-pure);
+        }
+        
+        /* ===== QUOTE DIVIDER ===== */
+        .quote-divider {
+            padding: clamp(4rem, 10vw, 6rem) clamp(2rem, 8vw, 8rem);
+            background: var(--green-forest);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .quote-divider-bg {
+            position: absolute;
+            inset: 0;
+            opacity: 0.12;
+        }
+        
+        .quote-divider-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .quote-divider-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, 
+                rgba(45, 59, 40, 0.93) 0%, 
+                rgba(74, 93, 58, 0.9) 50%,
+                rgba(45, 59, 40, 0.93) 100%);
+        }
+        
+        .quote-divider-content {
+            position: relative;
+            z-index: 10;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .quote-divider-text {
+            font-family: var(--font-accent);
+            font-size: clamp(1.1rem, 3vw, 1.4rem);
+            font-style: italic;
+            color: var(--cream);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+        
+        .quote-divider-verse {
+            font-family: var(--font-accent);
+            font-size: 1rem;
+            color: var(--gold-light);
+        }
+        
+        .quote-divider-verse cite {
+            font-style: normal;
+            letter-spacing: 0.1em;
+            opacity: 0.8;
+        }
+        
+        /* ===== CONTACT SECTION ===== */
+        .contact {
+            padding: clamp(5rem, 12vw, 8rem) clamp(2rem, 8vw, 8rem);
+            background: var(--cream);
+            text-align: center;
+        }
+        
+        .contact-content {
+            max-width: 650px;
+            margin: 0 auto;
+        }
+        
+        .contact-label {
+            font-family: var(--font-display);
+            font-size: 0.7rem;
+            letter-spacing: 0.3em;
+            color: var(--gold-dark);
+            text-transform: uppercase;
+            margin-bottom: 1.25rem;
+        }
+        
+        .contact-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.8rem, 5vw, 2.8rem);
+            font-weight: 400;
+            color: var(--ink);
+            letter-spacing: 0.05em;
+            margin-bottom: 1.25rem;
+        }
+        
+        .contact-text {
+            font-family: var(--font-accent);
+            font-size: 1.1rem;
+            font-style: italic;
+            color: var(--ink-light);
+            margin-bottom: 2.5rem;
+        }
+        
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            color: var(--ink);
+            text-decoration: none;
+            padding: 0.9rem 1.75rem;
+            border: 1px solid var(--stone);
+            transition: all 0.4s ease;
+        }
+        
+        .contact-link:hover {
+            border-color: var(--gold);
+            background: var(--gold);
+            color: var(--white-pure);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(201, 162, 39, 0.2);
+        }
+        
+        .contact-link svg {
+            width: 16px;
+            height: 16px;
+        }
+        
+        /* ===== FOOTER ===== */
+        footer {
+            padding: 2.5rem;
+            background: var(--ink);
+            text-align: center;
+        }
+        
+        .footer-ornament {
+            color: var(--gold-dark);
+            font-size: 1.25rem;
+            margin-bottom: 1.25rem;
+            opacity: 0.6;
+        }
+        
+        .footer-text {
+            font-family: var(--font-accent);
+            font-size: 0.9rem;
+            color: var(--stone);
+            margin-bottom: 0.4rem;
+        }
+        
+        .footer-verse {
+            font-family: var(--font-accent);
+            font-style: italic;
+            font-size: 0.85rem;
+            color: var(--gold-dark);
+            opacity: 0.8;
+        }
+        
+        /* ===== ANIMATIONS ON SCROLL ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+        
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            
+            .about-content {
+                padding-right: 0;
+                order: 2;
+            }
+            
+            .about-image {
+                order: 1;
+                max-width: 450px;
+                margin: 0 auto;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem 1.5rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .nav-toggle {
+                display: block;
+            }
+            
+            .hero-areas {
+                gap: 1rem;
+            }
+            
+            .hero-area {
+                font-size: 0.6rem;
+                padding: 0.4rem 1rem;
+            }
+            
+            .repos-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-links {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="canvas-texture"></div>
+    
+    <!-- Navigation -->
+    <nav id="navbar">
+        <a href="#" class="nav-logo">GUSTAVO PEREIRA</a>
+        <ul class="nav-links">
+            <li><a href="#about">Sobre</a></li>
+            <li><a href="#repos">Projetos</a></li>
+            <li><a href="#contact">Contato</a></li>
+        </ul>
+        <button class="nav-toggle" aria-label="Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg">
+            <img src="https://i.pinimg.com/1200x/4e/36/2b/4e362bf794867183316fccc9e752bde1.jpg" alt="Classical garden painting">
+        </div>
+        <div class="hero-overlay"></div>
+        
+        <div class="hero-content">
+            <div class="ornament">
+                <span class="ornament-line"></span>
+                <span class="ornament-symbol">✦</span>
+                <span class="ornament-line"></span>
+            </div>
+            
+            <p class="hero-subtitle">Pesquisador & Desenvolvedor</p>
+            
+            <h1 class="hero-title">
+                GUSTAVO PEREIRA
+                <span>Na interseção entre luz, vida e código</span>
+            </h1>
+            
+            <div class="hero-areas">
+                <span class="hero-area">PROGRAMAÇÃO</span>
+                <span class="hero-area">FOTÔNICA</span>
+                <span class="hero-area">BIOLOGIA</span>
+            </div>
+            
+            <p class="hero-verse">
+                "Tudo quanto fizerdes, fazei-o de todo o coração, como para o Senhor e não para homens."
+                <cite>— Colossenses 3:23</cite>
+            </p>
+            
+            <a href="#repos" class="hero-cta">
+                Ver Projetos
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 5v14M5 12l7 7 7-7"/>
+                </svg>
+            </a>
+        </div>
+        
+        <div class="scroll-indicator">
+            <span>SCROLL</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+    
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="about-grid">
+            <div class="about-image reveal">
+                <div class="about-image-frame">
+                    <img src="https://i.pinimg.com/736x/43/00/bd/4300bd4f2a1150a7dd356c8859cf07f6.jpg" alt="Garden artwork">
+                </div>
+            </div>
+            
+            <div class="about-content">
+                <span class="section-label reveal">Sobre Mim</span>
+                
+                <h2 class="about-title reveal reveal-delay-1">
+                    Onde a Luz Encontra<br>a Vida e o Código
+                </h2>
+                
+                <p class="about-text reveal reveal-delay-2">
+                    Estudante na Fatec São Paulo, trabalho na interseção fascinante entre programação, fotônica e biologia. Minha paixão está em usar ferramentas computacionais para desvendar os mistérios da luz e da vida — desenvolvendo simulações ópticas, análises de dados biológicos e algoritmos que conectam essas disciplinas.
+                </p>
+                
+                <p class="about-text reveal reveal-delay-3">
+                    Acredito que nossos talentos são dádivas a serem cultivadas. Cada projeto é uma oportunidade de criar algo que seja útil e significativo, de deixar um legado de trabalho bem feito.
+                </p>
+                
+                <div class="about-skills reveal reveal-delay-4">
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">MATLAB</span>
+                    <span class="skill-tag">Óptica</span>
+                    <span class="skill-tag">Simulações</span>
+                    <span class="skill-tag">Bioinformática</span>
+                    <span class="skill-tag">Análise de Dados</span>
+                    <span class="skill-tag">Machine Learning</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Repositories Section -->
+    <section class="repos" id="repos">
+        <div class="repos-header">
+            <span class="section-label reveal">Portfólio</span>
+            <h2 class="repos-title reveal reveal-delay-1">Meus Projetos</h2>
+            <p class="repos-intro reveal reveal-delay-2">
+                Explorações na fronteira entre luz, vida e algoritmos.
+            </p>
+        </div>
+        
+        <div class="repos-grid">
+            <!-- Placeholder cards - serão substituídos quando você criar repositórios -->
+            
+            <!-- Exemplo: Projeto de Fotônica -->
+            <article class="repo-card reveal">
+                <a href="https://github.com/gustavo-salmos-121" class="repo-link" target="_blank" rel="noopener"></a>
+                <div class="repo-card-inner">
+                    <span class="repo-category photonics">Fotônica</span>
+                    <div class="repo-icon">💡</div>
+                    <h3 class="repo-title">Simulador Óptico</h3>
+                    <p class="repo-description">
+                        Simulações de propagação de luz e interferência para análise de sistemas ópticos.
+                    </p>
+                    <div class="repo-meta">
+                        <span class="repo-lang">
+                            <span class="repo-lang-dot python"></span>
+                            Python
+                        </span>
+                    </div>
+                </div>
+            </article>
+            
+            <!-- Exemplo: Projeto de Biologia -->
+            <article class="repo-card reveal reveal-delay-1">
+                <a href="https://github.com/gustavo-salmos-121" class="repo-link" target="_blank" rel="noopener"></a>
+                <div class="repo-card-inner">
+                    <span class="repo-category biology">Biologia</span>
+                    <div class="repo-icon">🧬</div>
+                    <h3 class="repo-title">Análise Genômica</h3>
+                    <p class="repo-description">
+                        Pipeline para análise de sequências genéticas e visualização de dados biológicos.
+                    </p>
+                    <div class="repo-meta">
+                        <span class="repo-lang">
+                            <span class="repo-lang-dot r"></span>
+                            R
+                        </span>
+                    </div>
+                </div>
+            </article>
+            
+            <!-- Exemplo: Projeto de Programação -->
+            <article class="repo-card reveal reveal-delay-2">
+                <a href="https://github.com/gustavo-salmos-121" class="repo-link" target="_blank" rel="noopener"></a>
+                <div class="repo-card-inner">
+                    <span class="repo-category programming">Programação</span>
+                    <div class="repo-icon">⚡</div>
+                    <h3 class="repo-title">Algoritmos Numéricos</h3>
+                    <p class="repo-description">
+                        Implementações de métodos numéricos para resolução de problemas científicos.
+                    </p>
+                    <div class="repo-meta">
+                        <span class="repo-lang">
+                            <span class="repo-lang-dot matlab"></span>
+                            MATLAB
+                        </span>
+                    </div>
+                </div>
+            </article>
+            
+            <!-- Exemplo: Projeto Interdisciplinar -->
+            <article class="repo-card reveal reveal-delay-3">
+                <a href="https://github.com/gustavo-salmos-121" class="repo-link" target="_blank" rel="noopener"></a>
+                <div class="repo-card-inner">
+                    <span class="repo-category photonics">Biofotônica</span>
+                    <div class="repo-icon">🔬</div>
+                    <h3 class="repo-title">Microscopia Óptica</h3>
+                    <p class="repo-description">
+                        Processamento de imagens de microscopia para análise de amostras biológicas.
+                    </p>
+                    <div class="repo-meta">
+                        <span class="repo-lang">
+                            <span class="repo-lang-dot python"></span>
+                            Python
+                        </span>
+                    </div>
+                </div>
+            </article>
+        </div>
+        
+        <!-- Mensagem para quando não houver repositórios -->
+        <!--
+        <div class="repos-empty reveal">
+            <div class="repos-empty-icon">🌱</div>
+            <h3 class="repos-empty-title">Projetos em Cultivo</h3>
+            <p class="repos-empty-text">
+                Novos projetos estão sendo desenvolvidos e serão publicados em breve.
+            </p>
+            <a href="https://github.com/gustavo-salmos-121" class="repos-empty-link" target="_blank">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+                Ver GitHub
+            </a>
+        </div>
+        -->
+    </section>
+    
+    <!-- Quote Divider (substituindo a seção de Filosofia) -->
+    <section class="quote-divider">
+        <div class="quote-divider-bg">
+            <img src="mountain.png" alt="Mountain landscape">
+        </div>
+        <div class="quote-divider-overlay"></div>
+        
+        <div class="quote-divider-content">
+            <p class="quote-divider-text reveal">
+                "Porque somos feitura sua, criados em Cristo Jesus para as boas obras, as quais Deus preparou para que andássemos nelas."
+            </p>
+            <p class="quote-divider-verse reveal reveal-delay-1">
+                <cite>— Efésios 2:10</cite>
+            </p>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="contact-content">
+            <span class="contact-label reveal">Conexão</span>
+            
+            <h2 class="contact-title reveal reveal-delay-1">Vamos Colaborar</h2>
+            
+            <p class="contact-text reveal reveal-delay-2">
+                Interessado em pesquisa, projetos ou colaborações? Estou sempre aberto a novas conexões.
+            </p>
+            
+            <div class="contact-links reveal reveal-delay-3">
+                <a href="https://github.com/gustavo-salmos-121" class="contact-link" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                    GitHub
+                </a>
+                
+                <a href="mailto:seu@email.com" class="contact-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="4" width="20" height="16" rx="2"/>
+                        <path d="M22 6l-10 7L2 6"/>
+                    </svg>
+                    Email
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-ornament">✦</div>
+        <p class="footer-text">© 2025 Gustavo Pereira · Fatec São Paulo</p>
+        <p class="footer-verse">"Soli Deo Gloria"</p>
+    </footer>
+    
+    <script>
+        // Navigation scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // Reveal on scroll
+        const reveals = document.querySelectorAll('.reveal');
+        
+        const revealOnScroll = () => {
+            reveals.forEach(element => {
+                const windowHeight = window.innerHeight;
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 80;
+                
+                if (elementTop < windowHeight - elementVisible) {
+                    element.classList.add('active');
+                }
+            });
+        };
+        
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', revealOnScroll);
+        
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
